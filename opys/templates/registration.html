@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+	    <link rel="stylesheet" type="text/css" href="/css/style.css">
+		<title>Registration</title>
+	</head>
+	<body>
+		<h1 align="center">{{site_title}}</h1>
+		<h3 align="center">{{site_subtitle}}</h3>
+		<h3>Register New User</h3>	
+		<form method="POST">
+		    <table>
+		    	<tr>
+		    		<td>User Name</td><td><input type="text" name="username" value="{{username}}" /></td>
+		    		<td><div style="color: red">{{name_error}}</div></td>
+		    	</tr>
+		    	<tr>
+		    		<td>Password</td><td><input type="password" name="password" value="{{password}}" /></td>
+		    		<td><div style="color: red">{{pwd_error}}</div></td>
+		    	</tr>
+		    	<tr>
+		    		<td>Verify</td><td><input type="password" name="verify" value="{{verify}}" /></td>
+		    		<td><div style="color: red" />{{ver_error}}</div></td>
+		    	</tr>
+		    	<tr>
+		    		<td>Email</td><td><input type="text" name="email" value="{{email}}" /></td>
+		    		<td><div style="color:red">{{email_error}}</div></td>
+		    	</tr>
+		    	<tr>
+		    		<td></td><td><input type="submit" value="Submit Registration"/></td>
+		    	</tr>
+		    </table>  
+		</form>
+	</body>
+</html>	

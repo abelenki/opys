@@ -1,0 +1,81 @@
+body {
+      position: relative;
+      font-family: sans-serif;
+      width: 990px;
+      margin: 0 auto;
+      padding: 10px;
+}
+
+.error {
+      color: red
+    }
+
+label {
+      display: block;
+      font-size: 20px;
+      font-family: cursive;
+    }
+
+input[type=text] {
+      font-size: 20px;
+      font-family: cursive;
+      padding: 2px;
+    }
+input[type=password] {
+	width: 400px;
+	font-size: 20px;
+	padding:2px;
+}
+
+textarea {
+      width: 800px;
+      height: 600px;
+      font-size: 17px;
+      font-family: cursive;
+    }
+
+input[type=submit] {
+      font-size: 19px;
+      font-family: cursive;
+    }
+
+hr {
+      margin: 20px auto;
+    }
+    
+h1 {
+	font-family: cursive;
+}
+h3 {
+	font-family: cursive;
+}
+
+a { 
+	font-family:cursive;
+}
+
+a:hover, a:visited, a:link, a:active {
+	text-decoration: none;
+}
+
+.poem + .text {
+	margin-top: 10,0,0,20px;
+	font-family: cursive;
+}
+
+.poem-title {
+	font-weight: bold;
+	font-size: 20px;
+	font-family: cursive;
+	margin: 10,0,0,20;
+}
+.inlbl {
+	font-size: 18px;
+	font-family: cursive;
+}
+
+.poem-text {
+	margin: 10;
+	font-size: 17px;
+	font-family: cursive;
+}

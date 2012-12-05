@@ -1,0 +1,40 @@
+/* CSS Style Rule for Div having id="outer-container" */  
+/* outer-container will hold the whole assembly of  
+   nested div overlays. */  
+/* It will also center align the design */  
+#outer-container {  
+    width: 990px;  
+    margin: 0 auto;
+    align: left;  
+}  
+  
+/* footer CSS Style Rule */  
+#header {  
+    width: 990px;  
+    height: 90px;  
+}  
+  
+/* footer CSS Style Rule */  
+#footer {  
+    width: 990px;
+}  
+  
+/* content-container CSS Style Rule */  
+/* It will hold the main content of the page. */  
+/* it is the right side column */  
+/* in this 2 columns div layout */  
+#content-container {  
+    width: 790px;  
+    height: 400px;  
+    margin: 2px 0px 2px 0px;  
+    float: left;  
+}  
+  
+/* left side navigation that is the left side column of */  
+/* 2 columns div layout */  
+#left-nav {  
+    width: 198px;  
+    height: 400px;  
+    margin: 2px 2px 2px 0px;  
+    float: left;  
+}  

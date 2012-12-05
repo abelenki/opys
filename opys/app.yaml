@@ -1,0 +1,21 @@
+application: bea-sisk
+version: 5
+runtime: python27
+api_version: 1
+threadsafe: no
+
+handlers:
+- url: /css
+  static_dir: css
+- url: /images
+  static_dir: images
+- url: /.*
+  script: opys.py
+  
+libraries:
+- name: django
+  version: "1.4"
+- name: jinja2
+  version: latest
+
+ 

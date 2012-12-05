@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+	    <link rel="stylesheet" type="text/css" href="/css/style.css">
+	    <link rel="stylesheet" type="text/css" href="/css/layout.css">
+		<title>A Child of Hard Times</title>
+	</head>
+	<body>
+		<div id="outer-container">
+			<div id="header">
+				<h1 align="center">{{site_title}}</h1>
+				<h3 align="center">{{site_subtitle}}</h3>
+				<div style="clear: both">  
+			</div>
+			<div id="left-nav">
+				<h3>Contents</h3>  
+        		{% for poem in poems %}
+        			<a href="#{{poem.key()}}">{{poem.title|safe}}</a>
+        			<p>
+        		{% endfor %}
+   			</div>
+   			<div id="content-container">  
+				<div class="login_link" align="right">
+				{% if user_id == None or user_id == '' %}
+					<a href="/login">login</a>
+				{% else %}
+					welcome {{user_id}}&nbsp;<a href="/logout">logout</a>
+				{% endif %}
+				</div>
+				{% if user_id == 'bartelby' %}	
+				<form action="/" method="POST">
+					<input type="hidden" name="key" value="{{key}}" />
+					<label>
+						<div class="inlbl">title</div>
+						<input type="text" name="title" style="width:400px;" value="{{title}}"/>
+					</label>
+					<p>
+					<label>
+						<div class="inlbl">text</div>
+						<textarea name="text">{{text}}</textarea>
+					</label>
+					<p>
+					<table>
+						<tr>
+							<td>
+								<label>
+									<div class="plbl">
+										page#&nbsp;<input type="text" name="page" size="4" value="{{page}}"/>
+									</div>
+								</label>
+							</td>
+							<td>
+								<label>
+									<div class="qlbl">
+										Written&nbsp;<input type="text" name="written" size="8" value="{{written}}"/>
+									</div>
+								</label>
+							</td>
+						</tr>
+					</table>
+					<p>
+					<div class="error">{{error}}</div>
+					<input type="submit" value="save" />&nbsp;<input type="submit" action="/cancel" value="cancel" />
+				</form>	
+				<hr>
+				{% endif %}
+				{% for poem in poems %}
+					<div class="poems">
+						<a name="{{poem.key()}}"></a>
+						<div class="poem-title">{{poem.title|safe}}</div>
+						<pre class="poem-text">{{poem.text|safe}}</pre>
+						<div class="poem-written">{{poem.written}}</div>
+						{% if user_id == 'bartelby' %}
+						<table cellpadding="2" cellspacing="2" border="0">
+							<tr>
+								<td>
+									<form action="edit" method="POST">
+										<input type="hidden" name="key" value="{{poem.key()}}" />
+										<input type="submit" value="edit" />
+									</form>
+								</td>
+								<td>
+									<form action="delete" method="POST">
+										<input type="hidden" name="key" value="{{poem.key()}}" />
+										<input type="submit" value="delete" />
+									</form>
+								</td>
+							</tr>
+						</table>
+						{% endif %}	
+					</div>
+					<p><div align="left"><hr size="1"></div><p>		
+				{% endfor %}
+				<div style="clear: both">  
+			</div> <!-- END container-container -->	
+			<div id="footer">  
+        		<font size="tiny">&copy;Bea Sisk 2012 - All rights reserved, no wrongs deserved.</font>  
+    		</div> 	
+    		
+		</div>
+		
+	</body>
+</html>
