@@ -131,7 +131,6 @@ class MainPage(Handler):
         admin = False
         if not user == None and user.user_class == ADMIN:
             admin = True
-        user = getUser(user_id)
         self.render("index.html", poem=poem,poems=poems,user_id=user_id,admin=admin,
                     site_title=SITE_TITLE, site_subtitle=SITE_SUBTITLE, copyright_notice = COPYRIGHT_NOTICE)
         
@@ -148,7 +147,12 @@ class EditHandler(Handler):
         key = self.request.get("key")
         poem = db.get(key)
         user_id = self.request.cookies.get("user-id")
-        self.render("index.html", poem = poem, key=key, user_id = user_id,site_title=SITE_TITLE, site_subtitle=SITE_SUBTITLE)
+        user = getUser(user_id)
+        admin = False
+        if not user == None and user.user_class == ADMIN:
+            admin = True
+        self.render("index.html", poem = poem, poems=poems, key=key, user_id = user_id, admin=admin,
+                    site_title=SITE_TITLE, site_subtitle=SITE_SUBTITLE, copyright_notice=COPYRIGHT_NOTICE)
         
 class LoginHandler(Handler):
     def get(self):
