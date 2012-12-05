@@ -28,17 +28,17 @@
 					welcome {{user_id}}&nbsp;<a href="/logout">logout</a>
 				{% endif %}
 				</div>
-				{% if user_id == 'bartelby' %}	
+				{% if admin %}	
 				<form action="/" method="POST">
 					<input type="hidden" name="key" value="{{key}}" />
 					<label>
 						<div class="inlbl">title</div>
-						<input type="text" name="title" style="width:400px;" value="{{title}}"/>
+						<input type="text" name="title" style="width:400px;" value="{{poem.title}}"/>
 					</label>
 					<p>
 					<label>
 						<div class="inlbl">text</div>
-						<textarea name="text">{{text}}</textarea>
+						<textarea name="text">{{poem.text}}</textarea>
 					</label>
 					<p>
 					<table>
@@ -46,14 +46,14 @@
 							<td>
 								<label>
 									<div class="plbl">
-										page#&nbsp;<input type="text" name="page" size="4" value="{{page}}"/>
+										page#&nbsp;<input type="text" name="page" size="4" value="{{poem.page}}"/>
 									</div>
 								</label>
 							</td>
 							<td>
 								<label>
 									<div class="qlbl">
-										Written&nbsp;<input type="text" name="written" size="8" value="{{written}}"/>
+										Written&nbsp;<input type="text" name="written" size="8" value="{{poem.written}}"/>
 									</div>
 								</label>
 							</td>
@@ -71,7 +71,7 @@
 						<div class="poem-title">{{poem.title|safe}}</div>
 						<pre class="poem-text">{{poem.text|safe}}</pre>
 						<div class="poem-written">{{poem.written}}</div>
-						{% if user_id == 'bartelby' %}
+						{% if admin %}
 						<table cellpadding="2" cellspacing="2" border="0">
 							<tr>
 								<td>

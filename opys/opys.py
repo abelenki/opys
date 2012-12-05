@@ -72,6 +72,23 @@ class User(db.Model):
     email = db.StringProperty(required=False)
     user_class = db.CategoryProperty(required=True)
     created = db.DateTimeProperty(auto_now_add = True)
+    
+class Error():
+    name_error = ''
+    pwd_error = ''
+    ver_error = ''
+    email_error = ''
+    error = False
+    
+def getUser(username):
+    users = db.GqlQuery("SELECT * FROM User where username = :1",username)
+    user = None
+    for u in users:
+        user = u
+        if user.username == username:
+            break
+    return user
+    
          
 class MainPage(Handler):
     def get(self):
@@ -103,13 +120,18 @@ class MainPage(Handler):
             self.redirect("/")
         else:
             error = "incomplete submission"
-            self.render_index(title, text, error,"")
+            poem = Poem(title=title,text=text,page=page,written=written)
+            self.render_index(poem, error,"")
             
-    def render_index(self,title="",text="",error="",page="", written="",user_id = None):
+    def render_index(self,poem = None,user_id = None):
         poems = db.GqlQuery("select * from Poem order by page asc, created desc")
         user_id = self.request.cookies.get("user-id")
-        self.render("index.html",title=title, text=text, error=error, page=page, 
-                    written=written,poems=poems,user_id=user_id,
+        user = getUser(user_id)
+        admin = False
+        if not user == None and user.user_class == ADMIN:
+            admin = True
+        user = getUser(user_id)
+        self.render("index.html", poem=poem,poems=poems,user_id=user_id,admin=admin,
                     site_title=SITE_TITLE, site_subtitle=SITE_SUBTITLE)
         
 class DeleteHandler(Handler): 
@@ -125,8 +147,7 @@ class EditHandler(Handler):
         key = self.request.get("key")
         poem = db.get(key)
         user_id = self.request.cookies.get("user-id")
-        self.render("index.html", title=poem.title, text=poem.text, error="", poems=poems, page=poem.page, 
-                    written=poem.written, key=key, user_id = user_id,site_title=SITE_TITLE, site_subtitle=SITE_SUBTITLE)
+        self.render("index.html", poem = poem, key=key, user_id = user_id,site_title=SITE_TITLE, site_subtitle=SITE_SUBTITLE)
         
 class LoginHandler(Handler):
     def get(self):
@@ -135,13 +156,8 @@ class LoginHandler(Handler):
     def post(self):
         username = self.request.get('username')
         password = self.request.get('password')
-        user = None
-        users = db.GqlQuery("SELECT * FROM User")
-        for u in users:
-            user = u
-            if user.username == username:
-                break
-        if valid_pw(username, password, user.password):
+        user = getUser(username)
+        if not user == None and valid_pw(username, password, user.password):
             self.response.headers.add_header('Set-Cookie','user-id=' + username)
             self.redirect("/")
         else:
@@ -160,10 +176,9 @@ class CancelHandler(Handler):
         self.redirect("/")
 
 class RegistrationHandler(Handler):
-    def render_register(self,username="",password="",verify="",email="",name_error="",pwd_error="",ver_error="",email_error=""):
+    def render_register(self,username="",password="",verify="",email="",error=None):
         self.render("registration.html", username=username, password=password, verify=verify, email=email,
-                    name_error=name_error, pwd_error=pwd_error,ver_error=ver_error,email_error=email_error,
-                    site_title=SITE_TITLE, site_subtitle=SITE_SUBTITLE)
+                   error=error,site_title=SITE_TITLE, site_subtitle=SITE_SUBTITLE)
      
     def get(self):
         self.render_register()  
@@ -176,35 +191,26 @@ class RegistrationHandler(Handler):
         c_username = self.check(username, "^[a-zA-Z0-9_-]{3,20}$")
         c_password = self.check(password, "^.{3,20}$")
         c_email = self.check(email,"^[\S]+@[\S]+\.[\S]+$")   
-        name_error = ""
-        pwd_error = ""
-        ver_error = ""
-        email_error = "" 
+        error = Error()
         user = None
-        users = db.GqlQuery("SELECT * FROM User")
-        error = False
-        for u in users:
-            user = u
-            if user.username == username:
-                name_error = username + " is already in use - please choose another name."
-                error = True
-                break
+        user = getUser(username)
+        if not user == None:
+            error.name_error = "duplicate user name.  please choose another."
+            error.error = True
         if(password != verify):
-            ver_error = "Password does not match"
-            error = True
+            error.ver_error = "Password does not match"
+            error.error = True
         if c_username == None:
-            name_error = "Invalid Username"
-            error = True
+            error.name_error = "Invalid Username"
+            error.error = True
         if c_password == None:
-            pwd_error = "Invalid Password"
-            error = True
+            error.pwd_error = "Invalid Password"
+            error.error = True
         if(email != "" and c_email == None):
-            email_error = "Invalid email address" 
-            error = True   
-        if error:   
-            self.render_register(username, "", "", email, 
-                                 name_error, pwd_error, ver_error, email_error,
-                                 site_title=SITE_TITLE, site_subtitle=SITE_SUBTITLE)
+            error.email_error = "Invalid email address" 
+            error.error = True   
+        if error.error:   
+            self.render_register(username, "", "", email,error)
         else :
             #save user in database
             user_class = USER
