@@ -1,0 +1,22 @@
+I originally wrote this as a way to learn Google AppEngine.  
+It turns out that my elderly mother, who is an unpublished writer with a sizable 
+but mostly unpublished body of work, is amenable to publishing her work
+online.  I therefore set up this project to publish her poems - I will 
+scan and upload them as time permits to http://bea-sisk.appspot.com.
+
+The project can be customized to suit other purposes.  The first few lines of
+opys.py contain the following fields:
+
+#CONFIG: Change this to suit yourself
+ADMINISTRATOR = 'administrator'
+SITE_TITLE = "A Child of Hard Times"
+SITE_SUBTITLE = "Poems by Bea Sisk"
+COPYRIGHT_NOTICE = "&copy;Bea Sisk 2012 - All rights reserved, no wrongs deserved."
+
+Change the name of the administrator account to suit yourself.  Only administrators
+have right to add, edit or delete any material on the site.
+
+Feel free to use this code as you like.  If you find it useful, drop me a line.
+
+Peter Sisk
+bartelby@gmail.com

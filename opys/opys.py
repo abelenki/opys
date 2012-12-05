@@ -22,6 +22,7 @@ ADMIN = db.Category("admin")
 ADMINISTRATOR = 'administrator'
 SITE_TITLE = "A Child of Hard Times"
 SITE_SUBTITLE = "Poems by Bea Sisk"
+COPYRIGHT_NOTICE = "&copy;Bea Sisk 2012 - All rights reserved, no wrongs deserved."
 
 def hash_str(s):
     return md5(s).hexdgest()
@@ -132,7 +133,7 @@ class MainPage(Handler):
             admin = True
         user = getUser(user_id)
         self.render("index.html", poem=poem,poems=poems,user_id=user_id,admin=admin,
-                    site_title=SITE_TITLE, site_subtitle=SITE_SUBTITLE)
+                    site_title=SITE_TITLE, site_subtitle=SITE_SUBTITLE, copyright_notice = COPYRIGHT_NOTICE)
         
 class DeleteHandler(Handler): 
     def post(self):
