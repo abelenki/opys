@@ -66,12 +66,14 @@
 				
 				<hr>
 				{% endif %}
+				<a name="top"></a>
 				{% for poem in poems %}
 					<div class="poems">
 						<a name="{{poem.key()}}"></a>
 						<div class="poem-title">{{poem.title|safe}}</div>
 						<pre class="poem-text">{{poem.text|safe}}</pre>
 						<div class="poem-written">{{poem.written}}</div>
+						<div align="right"><a href="#top">back</a></div>
 						{% if admin %}
 						<table cellpadding="2" cellspacing="2" border="0">
 							<tr>
