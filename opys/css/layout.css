@@ -3,20 +3,20 @@
    nested div overlays. */  
 /* It will also center align the design */  
 #outer-container {  
-    width: 990px;  
+    width: 1000px;  
     margin: 0 auto;
     align: left;  
 }  
   
 /* footer CSS Style Rule */  
 #header {  
-    width: 990px;  
+    width: 1000px;  
     height: 90px;  
 }  
   
 /* footer CSS Style Rule */  
 #footer {  
-    width: 990px;
+    width: 1000px;
 }  
   
 /* content-container CSS Style Rule */  
@@ -24,9 +24,9 @@
 /* it is the right side column */  
 /* in this 2 columns div layout */  
 #content-container {  
-    width: 790px;  
+    width: 780px;  
     height: 400px;  
-    margin: 2px 0px 2px 0px;  
+    margin: 2px 0px 2px 10px;  
     float: left;  
 }  
   
@@ -35,6 +35,6 @@
 #left-nav {  
     width: 198px;  
     height: 400px;  
-    margin: 2px 2px 2px 0px;  
+    margin: 2px 10px 2px 0px;  
     float: left;  
 }  
