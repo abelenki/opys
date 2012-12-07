@@ -12,6 +12,10 @@ from regex import re
 from google.appengine.ext import db
 from google.appengine.ext.webapp.util import run_wsgi_app
 
+from entities import User
+from entities import Poem
+from entities import Error
+
 template_dir = os.path.join(os.path.dirname(__file__),'templates')
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir),autoescape=True)
 
@@ -59,28 +63,7 @@ class Handler(webapp2.RequestHandler):
     
     def render(self, template, **kw):
         self.write(self.render_str(template,**kw))
-
-class Poem(db.Model): 
-    title = db.StringProperty(required=True) 
-    text = db.TextProperty(required=True)
-    page = db.StringProperty(required=False)
-    written = db.StringProperty(required=False)
-    created = db.DateTimeProperty(auto_now_add = True)
-    
-class User(db.Model):
-    username = db.StringProperty(required=True)
-    password = db.StringProperty(required=True)
-    email = db.StringProperty(required=False)
-    user_class = db.CategoryProperty(required=True)
-    created = db.DateTimeProperty(auto_now_add = True)
-    
-class Error():
-    name_error = ''
-    pwd_error = ''
-    ver_error = ''
-    email_error = ''
-    error = False
-    
+        
 def getUser(username):
     users = db.GqlQuery("SELECT * FROM User where username = :1",username)
     user = None
@@ -89,8 +72,7 @@ def getUser(username):
         if user.username == username:
             break
     return user
-    
-         
+             
 class MainPage(Handler):
     def get(self):
         self.render_index()
