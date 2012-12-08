@@ -231,11 +231,11 @@ class CommentHandler(Handler):
         text = self.request.get("text")
         key = self.request.get("key") 
         user_id = self.request.cookies.get("user-id")
-        comment = None
-        if key and comment and text:
+        if key and title and text:
             comment = db.get(key)
             comment.title = title
             comment.text = text
+            db.save(comment)
         elif title and text:
             comment = Comment(title=title,text=text,username=user_id)
             comment.put()

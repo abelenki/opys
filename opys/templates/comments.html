@@ -42,7 +42,7 @@
    				<div class="comments">
    					{% for c in comments %}
 						<div class="poem-title">{{c.title|safe}}</div>
-						<pre class="poem-text">{{c.text|safe}}</pre>
+						<div class="poem-text">{{c.text|safe}}</div>
 						{% if username == c.username %}
 						<table cellpadding="2" cellspacing="2" border="0">
 							<tr>
