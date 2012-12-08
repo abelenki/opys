@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+	    <link rel="stylesheet" type="text/css" href="/css/style.css">
+	    <link rel="stylesheet" type="text/css" href="/css/layout.css">
+		<title>{{site_title}}</title>
+	</head>
+	<body>
+		<div id="outer-container">
+			<div id="header">
+				<a name="top"></a> 
+				<h1 align="center">{{site_title}}</h1>
+				<h3 align="center">{{site_subtitle}}</h3>
+				<div style="clear: both">  
+			</div>
+			<div id="left-nav">
+				<h3>Contents</h3>			 
+        		{% for poem in poems %}
+        			<a href="/#{{poem.key()}}">{{poem.title|safe}}</a>
+        			<p>
+        		{% endfor %}
+   			</div>
+   			<div id="content-container">
+   				{% if username != '' %}  
+	   				<form action="/comments" method="POST">
+	   					<input type="hidden" name="key" value="{{key}}" />
+	   					<label>
+							<div class="inlbl">title</div>
+							<input type="text" name="title" style="width:800px;" value="{{comment.title}}"/>
+						</label>
+						<p>
+						<label>
+							<div class="inlbl">text</div>
+							<textarea name="text" width="600px" height="400px">{{comment.text}}</textarea>
+						</label>
+						<p>
+						<input type="submit" value="save">&nbsp;<a href="/cancel">cancel</a>
+	   				</form>
+	   				<p>
+   				{% endif %}
+   				<div class="comments">
+   					{% for c in comments %}
+						<div class="poem-title">{{c.title|safe}}</div>
+						<pre class="poem-text">{{c.text|safe}}</pre>
+						{% if username == c.username %}
+						<table cellpadding="2" cellspacing="2" border="0">
+							<tr>
+								<td>
+									<form action="edit_comment" method="POST">
+										<input type="hidden" name="key" value="{{c.key()}}" />
+										<input type="submit" value="edit" />
+									</form>
+								</td>
+								<td>
+									<form action="delete_comment" method="POST">
+										<input type="hidden" name="key" value="{{c.key()}}" />
+										<input type="submit" value="delete" />
+									</form>
+								</td>
+							</tr>
+						</table>
+						{% endif %}
+						<hr>
+   				{% endfor %}
+   				</div>
+   			</div>
+   			<div id="footer">  
+        		<font size="tiny">{{copyright_notice|safe}}</font>  
+    		</div> 
+   		</div>
+   	</div>
+   
+</body>   		
+   			

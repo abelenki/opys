@@ -29,7 +29,7 @@ input[type=password] {
 
 textarea {
       width: 800px;
-      height: 600px;
+      height: 300px;
       font-size: 17px;
       font-family: cursive;
     }
@@ -56,6 +56,12 @@ a {
 
 a:hover, a:visited, a:link, a:active {
 	text-decoration: none;
+}
+
+.register_message {
+	font-family: cursive;
+	border: 1;
+	margin: 2,2,2,2;
 }
 
 .poem + .text {

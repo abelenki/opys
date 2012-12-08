@@ -15,6 +15,7 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 from entities import User
 from entities import Poem
 from entities import Error
+from entities import Comment
 
 template_dir = os.path.join(os.path.dirname(__file__),'templates')
 jinja_env = jinja2.Environment(loader=jinja2.FileSystemLoader(template_dir),autoescape=True)
@@ -26,6 +27,7 @@ ADMIN = db.Category("admin")
 ADMINISTRATOR = 'administrator'
 SITE_TITLE = "A Child of Hard Times"
 SITE_SUBTITLE = "Poems by Bea Sisk"
+COMMENT_SUBTITLE = "Comments"
 COPYRIGHT_NOTICE = "&copy;Bea Sisk 2012 - All rights reserved, no wrongs deserved."
 
 def hash_str(s):
@@ -179,7 +181,6 @@ class RegistrationHandler(Handler):
         c_password = self.check(password, "^.{3,20}$")
         c_email = self.check(email,"^[\S]+@[\S]+\.[\S]+$")   
         error = Error()
-        user = None
         user = getUser(username)
         if not user == None:
             error.name_error = "duplicate user name.  please choose another."
@@ -213,13 +214,76 @@ class RegistrationHandler(Handler):
         RE = re.compile(pattern)
         return RE.match(field)
 
+class CommentHandler(Handler):
+    def render_comments(self, comment=None, key=None, error=None):
+        poems = db.GqlQuery("select * from Poem order by page asc, created desc")
+        comments = db.GqlQuery("select * from Comment order by created asc")
+        user_id = self.request.cookies.get("user-id")                      
+        self.render("comments.html",comment=comment, key = key, comments=comments,poems=poems,username=user_id,
+                    error=error,site_title=SITE_TITLE, site_subtitle=COMMENT_SUBTITLE)
+    def get(self):
+        #display the comments page
+        self.render_comments()
+
+    def post(self):
+        #persist new comment to the db and 
+        title = self.request.get("title")
+        text = self.request.get("text")
+        key = self.request.get("key") 
+        user_id = self.request.cookies.get("user-id")
+        comment = None
+        if key and comment and text:
+            comment = db.get(key)
+            comment.title = title
+            comment.text = text
+        elif title and text:
+            comment = Comment(title=title,text=text,username=user_id)
+            comment.put()
+        self.redirect('/comments')
+
+class EditCommentHandler(Handler):
+    def post(self):
+        key = self.request.get("key")
+        comment = db.get(key)
+        poems = db.GqlQuery("select * from Poem order by page asc, created desc")
+        comments = db.GqlQuery("select * from Comment order by created asc")
+        user_id = self.request.cookies.get("user-id")  
+        self.render("comments.html",comment=comment, key = key, comments=comments,poems=poems,username=user_id,
+                    error=None,site_title=SITE_TITLE, site_subtitle=COMMENT_SUBTITLE)
+        
+    def get(self):
+        key = self.request.get("key")
+        comment = db.get(key)
+        poems = db.GqlQuery("select * from Poem order by page asc, created desc")
+        comments = db.GqlQuery("select * from Comment order by created asc")
+        user_id = self.request.cookies.get("user-id")  
+        self.render("comments.html",comment=comment, key = key, comments=comments,poems=poems,username=user_id,
+                    error=None,site_title=SITE_TITLE, site_subtitle=COMMENT_SUBTITLE)
+    
+class DeleteCommentHandler(Handler):
+    def post(self):
+        key = self.request.get("key")
+        comment = db.get(key)
+        db.delete(comment)
+        self.redirect("/comments")
+        
+    def get(self):
+        key = self.request.get("key")
+        comment = db.get(key)
+        db.delete(comment)
+        self.redirect("/comments")
+        
+    
 application = webapp2.WSGIApplication([('/', MainPage),
                                        ('/delete',DeleteHandler),
                                        ('/edit',EditHandler),
                                        ('/login',LoginHandler),
                                        ('/logout',LogoutHandler),
                                        ('/registration',RegistrationHandler),
-                                       ('/cancel',CancelHandler)
+                                       ('/cancel',CancelHandler),
+                                       ('/comments',CommentHandler),
+                                       ('/edit_comment',EditCommentHandler),
+                                       ('/delete_comment',DeleteCommentHandler)
                                        ], debug=True)
 
 def main():
