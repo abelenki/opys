@@ -18,5 +18,10 @@ have right to add, edit or delete any material on the site.
 
 Feel free to use this code as you like.  If you find it useful, drop me a line.
 
+NOTE - 12/9/2012: I am giving up on making the site generally configurable.  There 
+is a fair amount of HTML on the index template index.html that is specific to my 
+site.  If you want to use the code for your own purposes, you will have to rip it 
+out or edit it to suit.  Feel free to do so.
+
 Peter Sisk
 bartelby@gmail.com
