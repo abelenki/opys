@@ -74,6 +74,13 @@ def getUser(username):
         if user.username == username:
             break
     return user
+
+def isAdmin(username):
+    user = getUser(username)
+    admin = False
+    if not user == None and user.user_class == ADMIN:
+        return True
+    return False
              
 class MainPage(Handler):
     def get(self):
@@ -111,10 +118,7 @@ class MainPage(Handler):
     def render_index(self,poem = None,user_id = None):
         poems = db.GqlQuery("select * from Poem order by page asc, created desc")
         user_id = self.request.cookies.get("user-id")
-        user = getUser(user_id)
-        admin = False
-        if not user == None and user.user_class == ADMIN:
-            admin = True
+        admin = isAdmin(user_id)
         self.render("index.html", poem=poem,poems=poems,user_id=user_id,admin=admin,
                     site_title=SITE_TITLE, site_subtitle=SITE_SUBTITLE, copyright_notice = COPYRIGHT_NOTICE)
         
@@ -131,10 +135,7 @@ class EditHandler(Handler):
         key = self.request.get("key")
         poem = db.get(key)
         user_id = self.request.cookies.get("user-id")
-        user = getUser(user_id)
-        admin = False
-        if not user == None and user.user_class == ADMIN:
-            admin = True
+        admin = isAdmin(user_id)
         self.render("index.html", poem = poem, poems=poems, key=key, user_id = user_id, admin=admin,
                     site_title=SITE_TITLE, site_subtitle=SITE_SUBTITLE, copyright_notice=COPYRIGHT_NOTICE)
         
@@ -218,8 +219,9 @@ class CommentHandler(Handler):
     def render_comments(self, comment=None, key=None, error=None):
         poems = db.GqlQuery("select * from Poem order by page asc, created desc")
         comments = db.GqlQuery("select * from Comment order by created asc")
-        user_id = self.request.cookies.get("user-id")                      
-        self.render("comments.html",comment=comment, key = key, comments=comments,poems=poems,username=user_id,
+        user_id = self.request.cookies.get("user-id")  
+        admin = isAdmin(user_id)                  
+        self.render("comments.html",comment=comment, key = key, comments=comments,poems=poems,username=user_id,admin = admin,
                     error=error,site_title=SITE_TITLE, site_subtitle=COMMENT_SUBTITLE)
     def get(self):
         #display the comments page
@@ -248,7 +250,8 @@ class EditCommentHandler(Handler):
         poems = db.GqlQuery("select * from Poem order by page asc, created desc")
         comments = db.GqlQuery("select * from Comment order by created asc")
         user_id = self.request.cookies.get("user-id")  
-        self.render("comments.html",comment=comment, key = key, comments=comments,poems=poems,username=user_id,
+        admin = isAdmin(user_id)
+        self.render("comments.html",comment=comment, key = key, comments=comments,poems=poems,username=user_id,admin = admin,
                     error=None,site_title=SITE_TITLE, site_subtitle=COMMENT_SUBTITLE)
         
     def get(self):
@@ -256,8 +259,9 @@ class EditCommentHandler(Handler):
         comment = db.get(key)
         poems = db.GqlQuery("select * from Poem order by page asc, created desc")
         comments = db.GqlQuery("select * from Comment order by created asc")
-        user_id = self.request.cookies.get("user-id")  
-        self.render("comments.html",comment=comment, key = key, comments=comments,poems=poems,username=user_id,
+        user_id = self.request.cookies.get("user-id") 
+        admin = isAdmin(user_id)
+        self.render("comments.html",comment=comment, key = key, comments=comments,poems=poems,username=user_id,admin = admin,
                     error=None,site_title=SITE_TITLE, site_subtitle=COMMENT_SUBTITLE)
     
 class DeleteCommentHandler(Handler):
