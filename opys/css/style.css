@@ -13,12 +13,12 @@ body {
 label {
       display: block;
       font-size: 20px;
-      font-family: cursive;
+      font-family: courier;
     }
 
 input[type=text] {
       font-size: 20px;
-      font-family: cursive;
+      font-family: courier;
       padding: 2px;
     }
 input[type=password] {
@@ -31,12 +31,12 @@ textarea {
       width: 800px;
       height: 300px;
       font-size: 17px;
-      font-family: cursive;
+      font-family: courier;
     }
 
 input[type=submit] {
       font-size: 19px;
-      font-family: cursive;
+      font-family: courier;
     }
 
 hr {
@@ -44,14 +44,14 @@ hr {
     }
     
 h1 {
-	font-family: cursive;
+	font-family: courier;
 }
 h3 {
-	font-family: cursive;
+	font-family: courier;
 }
 
 a { 
-	font-family:cursive;
+	font-family:courier;
 }
 
 a:hover, a:visited, a:link, a:active {
@@ -59,29 +59,29 @@ a:hover, a:visited, a:link, a:active {
 }
 
 .register_message {
-	font-family: cursive;
+	font-family: courier;
 	border: 1;
 	margin: 2,2,2,2;
 }
 
 .poem + .text {
 	margin-top: 10,0,0,20px;
-	font-family: cursive;
+	font-family: courier;
 }
 
 .poem-title {
 	font-weight: bold;
 	font-size: 20px;
-	font-family: cursive;
+	font-family: courier;
 	margin: 10,0,0,20;
 }
 .inlbl {
 	font-size: 18px;
-	font-family: cursive;
+	font-family: courier;
 }
 
 .poem-text {
 	margin: 10;
 	font-size: 17px;
-	font-family: cursive;
+	font-family: courier;
 }
