@@ -25,15 +25,17 @@
    			<div id="content-container">  
 				<div class="login_link" align="right">
 				{% if user_id == None or user_id == '' %}
-					<div class="register_message" align="right">
-						Over the course of an eighty year writing career, Bea left a<br>
-						substantial body of of poems, stories and plays.  If you'd like <br>to be
-						notified when more of them get added to this site
-						<a href="/registration"><b>register</b><br>
-						</a> for an account.  If you have registered, you can <a href="/login"><b>login</b></a>,<br>
-						 go to the <a href="/comments"><b>comments</b></a> page and 
-						 chat with other Bea fans<br> or leave a message for her.
+					<div class="register_message" align="right" style="font-size: small;">
+						Over the course of an eighty year writing career,<br>
+						Bea left a substantial body of of poems, stories<br>
+					    and plays.  If you'd like to be notified when more<br>
+					    of them get added to this site, <a href="/registration"><b>register</b></a><br>
+					    for an account.  If you have registered,<br>
+					    you can <a href="/login"><b>login</b></a>, go to the
+						 <a href="/comments"><b>comments</b></a> page and<br> 
+						 chat with other Bea fans or leave a<br> message for her.
 					</div>
+					<p>
 				{% else %}
 					<div class="register_message" align="right">	
 						welcome {{user_id}}!&nbsp;<a href="/logout"><b>logout</b></a><br>

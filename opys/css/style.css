@@ -54,9 +54,19 @@ a {
 	font-family:courier;
 }
 
-a:hover, a:visited, a:link, a:active {
+a:link {
 	text-decoration: none;
+	color: #A0A0A0;
 }
+a:visited {
+	text-decoration: none;
+	color: #C0C0C0;
+}
+a:hover, a:active {
+	text-decoration: underline;
+	color: #888888;
+}
+
 
 .register_message {
 	font-family: courier;
